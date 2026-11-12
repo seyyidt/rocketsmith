@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#cdeaf6" />
+    <meta name="apple-mobile-web-app-title" content="Rocketsmith" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <title>Rocketsmith</title>
+    <script type="module" crossorigin src="./assets/index-UyL4fsno.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/dist-CMedSjkm.js">
+    <link rel="modulepreload" crossorigin href="./assets/backup-DsJzkjMf.js">
+    <link rel="modulepreload" crossorigin href="./assets/scale-Cu9llTRp.js">
+    <link rel="modulepreload" crossorigin href="./assets/font-Cmam0TdU.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-CPs0ruLv.css">
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div id="vignette"></div>
+    <div id="ui">
+      <div id="topbar">
+        <div class="brand">ROCKET<span>SMITH</span></div>
+        <div class="spacer"></div>
+        <button class="pill icon" id="fsbtn" title="Full screen"><i data-icon="expand"></i></button>
+        <button class="pill icon" id="statsbtn" title="Statistics"><i data-icon="stats"></i></button>
+        <button class="pill icon" id="helpbtn" title="Rocket guide"><i data-icon="book"></i></button>
+        <button class="pill icon" id="menubtn" title="Menu"><i data-icon="gear"></i></button>
+        <div class="pill" id="rank">Cadet</div>
+        <div class="pill" id="funds">$0</div>
+      </div>
+      <div id="menu" class="panel">
+        <button class="btn" id="mute"></button>
+        <button class="btn" id="music"></button>
+        <button class="btn" id="replaytut"><i data-icon="finger"></i> Replay tutorial</button>
+        <button class="btn" id="creditsbtn"><i data-icon="scroll"></i> Credits</button>
+        <div id="devtools">
+          <div class="menusep">Testing</div>
+          <button class="btn" id="devcash">+ $250,000</button>
+          <button class="btn" id="devrep">+ 1 reputation</button>
+        </div>
+        <button class="btn danger" id="reset">Reset progress</button>
+        <div id="desktopmenu">
+          <button class="btn" id="fullscreenbtn"></button>
+          <button class="btn" id="quitbtn"><i data-icon="close"></i> Quit</button>
+        </div>
+      </div>
+      <div id="paused" class="pill">Paused</div>
+
+      <div id="screen-hub" class="screen">
+        <div id="hubleft">
+          <div class="sector">
+            <h1 class="logo"><img class="emblem" src="icon.svg" alt="" />ROCKET<span>SMITH</span></h1>
+            <p class="tagline">Build rockets · Sink the Baron's navy · Reach space</p>
+          </div>
+          <button class="btn primary" id="freeflight">
+            <span class="big"><i data-icon="rocket"></i> FREE FLIGHT</span>
+            <span class="ffrec" id="ffrec" title="Your farthest hit"></span>
+            <span class="small">Every hit pays. Farther ships pay more.</span>
+          </button>
+          <div class="hubrow">
+            <button class="btn panel" id="openworkshop"><span class="wicon"><i data-icon="wrench"></i></span><span class="wtext"><b>Workshop</b><span class="small">Build, research and save rockets</span></span><span class="wgo">→</span></button>
+            <button class="btn panel" id="openwiki" title="How rockets work, with pictures"><span class="wicon"><i data-icon="book"></i></span><span class="wtext"><b>Guide</b></span></button>
+          </div>
+        </div>
+        <div id="contracts" class="panel">
+          <div class="cardshead"><i data-icon="scroll"></i> Contracts <span class="cardsprogress" id="cardsprogress"></span></div>
+          <div class="cardsub">Jobs pay money. The generals' contracts also earn ★ reputation, which unlocks new tech.</div>
+          <div id="cards"></div>
+        </div>
+      </div>
+
+      <div id="wiki" class="modal">
+        <div class="panel modalpanel wikipanel">
+          <button class="closex modalclose" aria-label="Close"><i data-icon="close"></i></button>
+          <div class="wikihead"><i data-icon="book"></i> Rocket guide</div>
+          <div class="wikicols">
+            <div id="wikinav"></div>
+            <div id="wikibody"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="ranks" class="modal">
+        <div class="panel modalpanel">
+          <button class="closex modalclose" aria-label="Close"><i data-icon="close"></i></button>
+          <h2>Ranks</h2>
+          <p class="modalsub">Contracts earn reputation (★). Each rank opens new parts and launch sites to research and raises your government allowance.</p>
+          <div id="rankslist"></div>
+                  </div>
+      </div>
+
+      <div id="stats" class="modal">
+        <div class="panel modalpanel">
+          <button class="closex modalclose" aria-label="Close"><i data-icon="close"></i></button>
+          <h2>Statistics</h2>
+          <div id="statsbody"></div>
+                  </div>
+      </div>
+
+      <div id="credits" class="modal">
+        <div class="panel modalpanel">
+          <button class="closex modalclose" aria-label="Close"><i data-icon="close"></i></button>
+          <h2>Credits</h2>
+          <p class="modalsub">Rocketsmith © 2026 Seyyid Tiryaki. Design, code, music and sound are original: every sound is synthesized while you play. Built with three.js and Capacitor, set in Nunito.</p>
+          <pre id="licenses">Loading licenses…</pre>
+                  </div>
+      </div>
+
+      <div id="fshelp" class="modal">
+        <div class="panel modalpanel">
+          <button class="closex modalclose" aria-label="Close"><i data-icon="close"></i></button>
+          <h2>Full screen on iPhone</h2>
+          <p class="modalsub">Safari on iPhone cannot show a page full screen, but the home screen can:</p>
+          <ol class="steps">
+            <li>Tap the <b>Share</b> button in Safari.</li>
+            <li>Choose <b>Add to Home Screen</b>.</li>
+            <li>Start Rocketsmith from its new icon. It opens without the browser's bars.</li>
+          </ol>
+          <p class="modalsub">The game from the home screen keeps its own progress. What you earned here in Safari stays in Safari.</p>
+        </div>
+      </div>
+
+      <div id="demoend" class="modal">
+        <div class="panel modalpanel demoend">
+          <button class="closex modalclose" aria-label="Close"><i data-icon="close"></i></button>
+          <h2 id="demoend-title">You made Captain!</h2>
+          <p class="modalsub" id="demoend-lead"></p>
+          <ul>
+            <li>Jet engines, ramjets and an autopilot for wave-skimming cruise missiles</li>
+            <li>Space shots and re-entry vehicles</li>
+            <li>Battleships with flak and close-in guns, speedboat chases</li>
+            <li>The Baron's sea fortress 70 km out, and his yacht</li>
+            <li>Heavy launch pads and a missile silo</li>
+          </ul>
+          <div class="row">
+            <a class="btn primary" id="demoend-get" target="_blank" rel="noopener">Get it on the App Store</a>
+            <button class="btn modalclose">Keep playing</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="briefing"><div class="panel" id="briefpanel"></div></div>
+
+      <div id="screen-build" class="screen">
+        <div id="stackpanel" class="panel">
+          <div class="buildhead">
+            <h3 id="buildtitle">Free Flight</h3>
+            <div class="designbar">
+              <button class="iconbtn" id="buildwarn" title="What needs attention"></button>
+              <button class="iconbtn" id="designdel" title="Delete this saved rocket"><i data-icon="trash"></i></button>
+              <label class="iconbtn" id="designload" title="Load a rocket"><i data-icon="load"></i><select id="designsel" aria-label="Load a rocket"></select></label>
+              <button class="iconbtn" id="designsave" title="Save this rocket"><i data-icon="save"></i></button>
+            </div>
+          </div>
+          <div id="buildstats"></div>
+          <div id="stacklist"></div>
+          <label class="autostage"><input type="checkbox" id="autostage" /> Auto-stage when a stage burns out</label>
+        </div>
+        <div id="parts" class="panel">
+          <div id="partlist"></div>
+          <div id="tabtitle"></div>
+          <div id="tabs"></div>
+        </div>
+        <div id="viewbar">
+          <button class="btn panel" id="buildback"><i data-icon="home"></i> Hub</button>
+          <button class="btn panel" id="viewreset" title="Reset the view" aria-label="Reset the view" style="display: none"><i data-icon="recenter"></i></button>
+        </div>
+        <div id="buildbar">
+          <button class="btn panel" id="contractbtn" title="Show the contract again"><i data-icon="scroll"></i> <span id="contractname"></span></button>
+          <button class="btn primary" id="tolaunch"><i data-icon="rocket"></i> Launch</button>
+        </div>
+        <div id="buildtip" class="panel"></div>
+      </div>
+
+      <div id="hud" class="screen">
+        <div id="seekerscreen"></div>
+        <div id="seeker"><span id="seekername">TV Seeker</span><span id="seekerstate"></span><span id="seekerzoom"></span></div>
+        <div id="seekzoom">
+          <button class="btn panel" id="seekin" title="Zoom in (mouse wheel, pinch or +)">+</button>
+          <button class="btn panel" id="seekout" title="Zoom out (mouse wheel, pinch or −)">−</button>
+          <button class="btn panel" id="seekauto" title="Let the lens frame the ships by itself again (double tap)">AUTO</button>
+        </div>
+        <button id="seekclose" class="btn panel" data-key="T" title="Back to the normal view (T or Esc)">✕</button>
+        <div class="top">
+          <button class="btn panel" id="abort" title="Workshop (Esc)"><span class="ai"><i data-icon="wrench"></i></span><span class="al">Workshop</span></button>
+          <button class="btn panel" id="relaunch" title="Relaunch (R)"><i data-icon="retry"></i></button>
+          <div id="minimap-wrap" class="panel" title="Make the map bigger or smaller">
+            <div class="t"><span id="hudtitle"></span><span id="hudtarget"></span><span id="mapzoom"><i data-icon="expand"></i></span></div>
+            <canvas id="minimap"></canvas>
+          </div>
+          <div id="wind" class="panel"></div>
+          <button id="warp" class="btn panel" data-key="F" title="Fast forward: 1×, 2×, 4×, 10× (F)"></button>
+        </div>
+        <div id="hudearned"></div>
+        <div class="gauges panel" id="gauges">
+          <div class="g"><div class="k">Distance</div><div class="v" id="g-dist">0 m</div></div>
+          <div class="g"><div class="k">Altitude</div><div class="v" id="g-alt">0 m</div></div>
+          <div class="g"><div class="k">Speed</div><div class="v" id="g-speed">0 km/h</div></div>
+          <div class="g"><div class="k">Fuel</div><div class="bar"><div class="fill" id="g-fuel" style="background: var(--blue)"></div></div></div>
+          <div class="g"><div class="k">Hull</div><div class="bar"><div class="fill" id="g-hull" style="background: var(--green)"></div></div></div>
+          <div class="g"><div class="k">Heat</div><div class="bar"><div class="fill" id="g-heat"></div></div></div>
+        </div>
+        <div id="aimctl">
+          <div id="angle" class="panel">
+            <button class="btn" id="angdown">−</button>
+            <div class="val"><div class="lbl" id="anglbl">Angle</div><span id="angval">45°</span></div>
+            <button class="btn" id="angup">+</button>
+          </div>
+          <button class="btn fire" id="firebtn" data-key="Space">FIRE</button>
+        </div>
+        <div id="steerctl">
+          <button class="btn" id="steerup" data-key="W" title="Turn the nose up (W)"><i data-icon="turnleft"></i></button>
+          <button class="btn" id="steerdown" data-key="S" title="Turn the nose down (S)"><i data-icon="turnright"></i></button>
+        </div>
+        <div id="flightctl">
+          <button class="btn" id="seekbtn" data-key="T" title="TV Seeker: the thermal view, to pick a ship (T; L locks the next ship)"><i data-icon="target"></i></button>
+          <button class="btn" id="autobtn" data-key="A" title="Autopilot on or off (A)">AUTO</button>
+          <button class="btn" id="camerabtn" data-key="V" title="Chase Camera: zoom out to see the sea below (V)"><i data-icon="camera"></i></button>
+          <button class="btn" id="boombtn" data-key="B" title="Detonate the warhead (B)"><i data-icon="blast"></i></button>
+          <button class="btn" id="stagebtn" data-key="Space">STAGE</button>
+          <div id="throttle" class="panel" title="Throttle: Shift / Ctrl, Z full, X cut">
+            <div id="thrtrack"><div id="thrfill"></div></div>
+            <div id="thrval">100%</div>
+          </div>
+        </div>
+        <div id="hint" class="pill"></div>
+        <div id="offscreen"></div>
+        <div id="touchring"></div>
+        <div id="holdline"><span></span></div>
+      </div>
+
+      <div id="screen-report" class="screen"><div id="report" class="panel"></div></div>
+      <div id="toasts"></div>
+      <div id="coach">
+        <div id="coachring"></div>
+        <div id="coachbox" class="panel"><p id="coachtext"></p><div class="row"><button class="btn" id="coachskip">Skip tutorial</button><button class="btn primary" id="coachnext">Next</button></div></div>
+      </div>
+    </div>
+    <div id="rotate">
+      <div>
+        <div class="logo">ROCKET<span>SMITH</span></div>
+        <div class="phone"><i></i></div>
+        <p>Turn your phone sideways to play</p>
+      </div>
+    </div>
+  </body>
+</html>
