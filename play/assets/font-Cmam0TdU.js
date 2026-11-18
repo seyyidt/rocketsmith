@@ -1,0 +1,1 @@
+var e=`'Nunito', 'Rocketsmith Symbols', system-ui, sans-serif`;async function t(){try{await Promise.all([document.fonts.load(`800 16px 'Nunito'`),document.fonts.load(`16px 'Rocketsmith Symbols'`,`★▼✕`)])}catch{}}export{t as n,e as t};
